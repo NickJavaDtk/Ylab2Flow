@@ -4,5 +4,8 @@ import ru.ylab.entitys.AdditionalInformation;
 
 public interface AdditionalInformationInterface {
 
-    AdditionalInformation createAdditionalInformation(int countExercise, int distance, String sportsNutrition);
+
+   boolean checkCountExercise(int countExercise);
+   boolean checkCountDistance(int distance);
+   boolean checkCountSportNutrition(String sportsNutrition);
 }

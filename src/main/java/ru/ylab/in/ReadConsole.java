@@ -42,7 +42,7 @@ public class ReadConsole {
      *
      * @return String возвращает значение типа String
      */
-    private String readString() {
+    public String readString() {
         String input = scanner.nextLine( );
         return input;
     }
@@ -78,7 +78,7 @@ public class ReadConsole {
         } catch (ClassCastException | ParseException e) {
             CustomLogger.addMessageLogger("В консоль введены дата которые не соответствует рекомендуемым  ввода/вывода");
             throw new IOReadConsoleException("Введенная дата не может быть прочитана. Просьба ввести дату в формате dd.MM.yyyy" +
-                    "например 31.12.2023,\n если же все-таки ошибка не устраняется введите разделители точки \".\" " +
+                    "например 10.04.2024,\n если же все-таки ошибка не устраняется введите разделители точки \".\" " +
                     "на английской раскладке");
         }
 
