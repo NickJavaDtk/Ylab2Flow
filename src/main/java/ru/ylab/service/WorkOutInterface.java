@@ -5,12 +5,13 @@ import ru.ylab.entitys.WorkOut;
 
 
 import java.time.LocalDate;
+import java.util.Map;
 
 public interface WorkOutInterface<T extends WorkOut> {
 
     T createWorkOut(LocalDate dataTraining, String typeTraining, int durationTraining, int countCalorie);
 
-    Boolean addListWorkOut(T workout);
+
 
     void addMapWorkOut(T workout, Users users);
 
@@ -30,6 +31,24 @@ public interface WorkOutInterface<T extends WorkOut> {
      * @return true если параметры валидны
      */
     boolean checkInputParameters(int value, String messageLogger, String messageConsole);
+
+    /**
+     * Метод для печати дневника
+     * @param user передается чтобы распечатать пользователю только его записи
+     * @return возращает карту ключ у которой номер записи, а значение список тренировок
+     */
+    Map<Integer, T> viewRecordDiary(Users user);
+
+    /**
+     * Метод возвращает тренировку по заданной дате и типу тренировки. Данная тренировка уникальна, так как нельзя ввести
+     * две тренировки с одним типом в один день
+     * @param date
+     * @param typeTraining
+     * @return
+     */
+    T getCustomWork(LocalDate date, String typeTraining, Users users);
+
+
 
 
 

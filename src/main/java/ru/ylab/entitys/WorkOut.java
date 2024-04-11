@@ -1,6 +1,8 @@
 package ru.ylab.entitys;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 
@@ -8,20 +10,26 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 
-@AllArgsConstructor
+@Getter
+@Setter
+@SuperBuilder
 public abstract class WorkOut {
     private LocalDate dataTraining;
     private String typeTraining;
     private int durationTraining;
     private int countCalorie;
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        WorkOut workOut = (WorkOut) o;
-//        return Objects.equals(dataTraining, workOut.dataTraining) && Objects.equals(typeTraining, workOut.typeTraining);
-//    }
+    public WorkOut(LocalDate dataTraining, String typeTraining, int durationTraining, int countCalorie) {
+    }
 
 
+    @Override
+    public String toString() {
+        return "Доступные тренировки{" +
+                "на=" + dataTraining +
+                ", Тип тренировки='" + typeTraining + '\'' +
+                ", Длительность тренировки=" + durationTraining +
+                ", Минимальное количество потраченных калорий=" + countCalorie +
+                '}';
+    }
 }

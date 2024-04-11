@@ -11,7 +11,10 @@ import ru.ylab.service.WorkOutInterface;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class WorkOutInterfaceImpl implements WorkOutInterface<CustomWorkOut> {
 
@@ -26,10 +29,7 @@ public class WorkOutInterfaceImpl implements WorkOutInterface<CustomWorkOut> {
                 .build();
     }
 
-    @Override
-    public Boolean addListWorkOut(CustomWorkOut workout) {
-        return InternalMemory.workOutsList.add(workout);
-    }
+
 
     @Override
     public void addMapWorkOut(CustomWorkOut workout, Users users) {
@@ -46,20 +46,18 @@ public class WorkOutInterfaceImpl implements WorkOutInterface<CustomWorkOut> {
 
     @Override
     public Boolean checkTrainingDone(LocalDate dataTraining, String typeTraining, Users users) {
-        if (InternalMemory.workOutsList.size() == 0) {
+        if (InternalMemory.workOutsMap.size() == 0) {
             return true;
         } else {
-            CustomWorkOut custom = (CustomWorkOut) InternalMemory.workOutsList.stream()
-                    .forEach(da -> da.)
-                    .filter(data -> data.).findAny().orElse(null);
+            List<WorkOut> list = InternalMemory.workOutsMap.get(users.getUsername());
+            CustomWorkOut custom = (CustomWorkOut) list.stream().filter(date -> date.getDataTraining().equals(dataTraining)).findAny().orElse(null);
             if (custom == null) {
                 return true;
             } else {
                 if (custom.getTypeTraining().equals(typeTraining)) {
                     CustomLogger.addMessageLogger("Пользователь " + users.getUsername() + " пытается ввести тренировку с одним типом" +
                             "в один день");
-                    new InputParameterException("Нельзя ввести в один день две тренировки с одинм типом");
-                    return false;
+                    throw  new InputParameterException("Нельзя ввести в один день две тренировки с одинм типом");
                 }
             }
         }
@@ -74,4 +72,37 @@ public class WorkOutInterfaceImpl implements WorkOutInterface<CustomWorkOut> {
         }
         return true;
     }
+
+    @Override
+    public Map<Integer, CustomWorkOut> viewRecordDiary(Users user) {
+        Map<Integer, CustomWorkOut> map = new HashMap<>();
+        List<WorkOut> list = InternalMemory.workOutsMap.get(user.getUsername());
+        int count = 0;
+        for (WorkOut work : list) {
+            System.out.println(++count + " " +  work);
+            map.put(count, (CustomWorkOut) work);
+        }
+        return map;
+    }
+
+    @Override
+    public CustomWorkOut getCustomWork(LocalDate date, String typeTraining, Users user) {
+        List<WorkOut> list = InternalMemory.workOutsMap.get(user.getUsername());
+        List<WorkOut> listWorkOut = list.stream()
+                .filter(localDate -> localDate.getDataTraining().equals(date))
+                .collect(Collectors.toList());
+        return (CustomWorkOut) listWorkOut.stream()
+                .filter(type -> type.getTypeTraining().equals(typeTraining)).findAny().get();
+    }
+
+//    @Override
+//    public void viewRecordDiary(Users user) {
+//        List<WorkOut> list = InternalMemory.workOutsMap.get(user.getUsername());
+//        int count = 0;
+//        for (WorkOut work : list) {
+//            System.out.println(++count + " " + work);
+//        }
+//    }
+
+
 }

@@ -15,19 +15,9 @@ public class AdditionalInformation {
     private int distance;
     private String sportsNutrition;
 
-    public AdditionalInformation(int countExercise, int distance) {
-        this.countExercise = countExercise;
-        this.distance = distance;
-    }
 
-    public AdditionalInformation(int countExercise, String sportsNutrition) {
-        this.countExercise = countExercise;
-        this.sportsNutrition = sportsNutrition;
-    }
 
-    public AdditionalInformation(int countExercise) {
-        this.countExercise = countExercise;
-    }
+
 
 
 }
